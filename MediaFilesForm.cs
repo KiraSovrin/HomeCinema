@@ -5,7 +5,8 @@ namespace Home_Cinema
     public partial class MediaFilesForm : Form
     {
         private string folderPath;
-        private ListBox listBoxFiles;
+        private ListBox listBoxFiles = null!; // Initialize with null-forgiving operator to satisfy the compiler
+
         public MediaFilesForm(string folderPath)
         {
             this.folderPath = folderPath;
@@ -23,13 +24,13 @@ namespace Home_Cinema
             this.listBoxFiles.Dock = DockStyle.Fill;
             this.listBoxFiles.Font = new Font("Segoe UI", 12F);
             this.listBoxFiles.ItemHeight = 24;
-            this.listBoxFiles.DoubleClick += ListBoxFiles_DoubleClick;
+            //this.listBoxFiles.DoubleClick += ListBoxFiles_DoubleClick!;
             // 
             // MediaFilesForm
             // 
             this.ClientSize = new Size(600, 400);
             this.Controls.Add(this.listBoxFiles);
-            this.Text = $"Files in {Path.GetFileName(folderPath)}";
+            //this.Text = $"Files in {Path.GetFileName(folderPath)}";
             this.ResumeLayout(false);
         }
 
@@ -46,13 +47,16 @@ namespace Home_Cinema
             }
         }
 
-        private void ListBoxFiles_DoubleClick(object sender, EventArgs e)
+        private void ListBoxFiles_DoubleClick(object? sender, EventArgs e)
         {
             if (listBoxFiles.SelectedItem != null)
             {
-                string fileName = listBoxFiles.SelectedItem.ToString(); 
-                string fullPath = Path.Combine(folderPath, fileName);
-                MessageBox.Show($"Selected: {fullPath}"); // Placeholder for playback
+                string? fileName = listBoxFiles.SelectedItem.ToString();
+                if (!string.IsNullOrEmpty(fileName))
+                {
+                    string fullPath = Path.Combine(folderPath, fileName);
+                    MessageBox.Show($"Selected: {fullPath}"); // Placeholder for playback
+                }
             }
         }
     }
