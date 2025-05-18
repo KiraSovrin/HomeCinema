@@ -39,13 +39,17 @@
             mainPanel = new Panel();
             btnMinimize = new Button();
             btnClose = new Button();
+            sideBar = new Panel();
+            btnSettings = new Button();
+            sideBar.SuspendLayout();
             SuspendLayout();
             // 
             // btnSelectFolder
             // 
-            btnSelectFolder.Location = new Point(12, 12);
+            btnSelectFolder.Cursor = Cursors.Hand;
+            btnSelectFolder.Location = new Point(12, 3);
             btnSelectFolder.Name = "btnSelectFolder";
-            btnSelectFolder.Size = new Size(150, 30);
+            btnSelectFolder.Size = new Size(122, 30);
             btnSelectFolder.TabIndex = 0;
             btnSelectFolder.Text = "Select Main Folder";
             btnSelectFolder.UseVisualStyleBackColor = true;
@@ -56,56 +60,74 @@
             flowPanelCards.AutoScroll = true;
             flowPanelCards.Location = new Point(12, 50);
             flowPanelCards.Name = "flowPanelCards";
-            flowPanelCards.Size = new Size(776, 388);
+            flowPanelCards.Size = new Size(800, 400);
             flowPanelCards.TabIndex = 1;
             // 
             // mainPanel
             // 
-            mainPanel.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            mainPanel.Location = new Point(12, 50);
+            mainPanel.BackColor = Color.Transparent;
+            mainPanel.Location = new Point(156, 39);
             mainPanel.Name = "mainPanel";
-            mainPanel.Size = new Size(776, 388);
-            mainPanel.TabIndex = 2;
+            mainPanel.Padding = new Padding(5);
+            mainPanel.Size = new Size(728, 522);
+            mainPanel.TabIndex = 6;
             // 
             // btnMinimize
             // 
-            btnMinimize.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnMinimize.Size = new Size(30, 30);
-            btnMinimize.Location = new Point(800 - 70, 0); // 70px from right
-            btnMinimize.Text = "_";
+            btnMinimize.Location = new Point(816, 8);
             btnMinimize.Name = "btnMinimize";
-            btnMinimize.TabIndex = 3;
-            btnMinimize.FlatStyle = FlatStyle.Flat;
-            btnMinimize.FlatAppearance.BorderSize = 0;
-            btnMinimize.Click += new System.EventHandler(this.BtnMinimize_Click);
+            btnMinimize.Size = new Size(25, 25);
+            btnMinimize.TabIndex = 7;
+            btnMinimize.Click += BtnMinimize_Click;
             // 
             // btnClose
             // 
-            btnClose.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnClose.Size = new Size(30, 30);
-            btnClose.Location = new Point(800 - 35, 0); // 35px from right
-            btnClose.Text = "X";
+            btnClose.Location = new Point(847, 8);
             btnClose.Name = "btnClose";
-            btnClose.TabIndex = 4;
-            btnClose.FlatStyle = FlatStyle.Flat;
-            btnClose.FlatAppearance.BorderSize = 0;
-            btnClose.Click += new System.EventHandler(this.BtnClose_Click);
+            btnClose.Size = new Size(25, 25);
+            btnClose.TabIndex = 0;
+            btnClose.Click += BtnClose_Click;
+            // 
+            // sideBar
+            // 
+            sideBar.BackColor = Color.Transparent;
+            sideBar.Controls.Add(btnSettings);
+            sideBar.Controls.Add(btnSelectFolder);
+            sideBar.Location = new Point(0, 39);
+            sideBar.Name = "sideBar";
+            sideBar.Padding = new Padding(2);
+            sideBar.Size = new Size(150, 522);
+            sideBar.TabIndex = 5;
+            // 
+            // btnSettings
+            // 
+            btnSettings.Location = new Point(12, 39);
+            btnSettings.Name = "btnSettings";
+            btnSettings.Size = new Size(122, 33);
+            btnSettings.TabIndex = 1;
+            btnSettings.Text = "Settings";
+            btnSettings.UseVisualStyleBackColor = true;
+            btnSettings.Click += btnSettings_Click;
             // 
             // HomeCinemaForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
-            Controls.Add(btnSelectFolder);
-            Controls.Add(mainPanel);
-            Controls.Add(btnMinimize);
+            ClientSize = new Size(884, 561);
             Controls.Add(btnClose);
+            Controls.Add(btnMinimize);
+            Controls.Add(sideBar);
+            Controls.Add(mainPanel);
             Name = "HomeCinemaForm";
             Text = "Home Cinema";
             Load += HomeCinemaForm_Load;
+            sideBar.ResumeLayout(false);
             ResumeLayout(false);
         }
 
         #endregion
+
+        private Panel sideBar;
+        private Button btnSettings;
     }
 }

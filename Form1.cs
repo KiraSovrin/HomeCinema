@@ -1,12 +1,10 @@
-using System.IO;
-using System.Linq;
-using System.Text.Json;
+﻿using System.Text.Json;
 
 namespace Home_Cinema
 {
     public partial class HomeCinemaForm : Form
     {
-        
+
         private static readonly string projectRoot = Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory).Parent.Parent.Parent.FullName;
         private static readonly string SettingsFileDir = Path.Combine(projectRoot, "appsettings.json");
         private AppSettings appSettings;
@@ -19,8 +17,8 @@ namespace Home_Cinema
         private System.Windows.Forms.Timer _seekTimer;
 
         // Resource paths
-        private static readonly string AppIconPath = Path.Combine("Resources", "Icons", "appicon.png");
-        private static readonly string PlaceholderImagePath = Path.Combine("Resources", "Placeholders", "placeholder.png");
+        private static readonly string AppIconPath = Path.Combine(projectRoot, "Resources", "Icons", "appicon.png");
+        private static readonly string PlaceholderImagePath = Path.Combine(projectRoot, "Resources", "Icons", "placeholder.png");
 
         // Theme file paths
         private static readonly string ThemesDir = Path.Combine(projectRoot, "Resources", "Themes");
@@ -36,7 +34,7 @@ namespace Home_Cinema
             appSettings.SelectedTheme == "Custom" && CustomTheme != null ? CustomTheme :
             LightTheme;
 
-        private Button btnSettings;
+        //private Button btnSettings;
 
         public HomeCinemaForm()
         {
@@ -45,9 +43,9 @@ namespace Home_Cinema
             this.FormBorderStyle = FormBorderStyle.None;
             // Allow dragging the window by mouse down on the top area
             this.MouseDown += HomeCinemaForm_MouseDown;
-            btnSettings = new Button { Text = "Settings", Width = 100, Height = 30, Top = 12, Left = 180 };
-            btnSettings.Click += (s, e) => ShowSettingsPanel();
-            this.Controls.Add(btnSettings);
+            //btnSettings = new Button { Text = "Settings", Width = 100, Height = 30, Top = 12, Left = 180 };
+            //btnSettings.Click += (s, e) => ShowSettingsPanel();
+            //this.Controls.Add(btnSettings);
             EnsureThemesDirectoryAndFiles();
             LightTheme = LoadTheme(LightThemeFile);
             DarkTheme = LoadTheme(DarkThemeFile);
@@ -64,6 +62,11 @@ namespace Home_Cinema
                 CustomTheme = LoadTheme(CustomThemeFile);
             ApplyTheme(CurrentTheme);
             this.FormClosed += HomeCinemaForm_FormClosed;
+        }
+
+        private void btnSettings_Click(object sender, EventArgs e)
+        {
+            ShowSettingsPanel();
         }
 
         private Theme LoadTheme(string filePath)
@@ -86,28 +89,40 @@ namespace Home_Cinema
                 return new Theme
                 {
                     Name = "Dark",
+                    // ---- General Form ----
                     BackColor = "#1E1E1E",
                     ForeColor = "#FFFFFF",
-                    ButtonBackColor = "#3C3C3C",
-                    ButtonForeColor = "#FFFFFF",
-                    PanelBackColor = "#2D2D2D",
                     MainFontFamily = "Segoe UI",
                     MainFontSize = 10f,
-                    MainFontStyle = FontStyle.Regular
+                    MainFontStyle = FontStyle.Regular,
+                    // ---- Panel ----
+                    PanelBackColor = "#2D2D2D",
+                    PanelBorderColor = "#444444",
+                    PanelBorderWidth = 1,
+                    PanelCornerRadius = 4,
+                    // ---- Button ----
+                    ButtonBackColor = "#3C3C3C",
+                    ButtonForeColor = "#FFFFFF"
                 };
             }
             // Light as default
             return new Theme
             {
                 Name = "Light",
+                // ---- General Form ----
                 BackColor = "#FFFFFF",
                 ForeColor = "#000000",
-                ButtonBackColor = "#D3D3D3",
-                ButtonForeColor = "#000000",
-                PanelBackColor = "#F5F5F5",
                 MainFontFamily = "Segoe UI",
                 MainFontSize = 10f,
-                MainFontStyle = FontStyle.Regular
+                MainFontStyle = FontStyle.Regular,
+                // ---- Panel ----
+                PanelBackColor = "#F5F5F5",
+                PanelBorderColor = "#CCCCCC",
+                PanelBorderWidth = 1,
+                PanelCornerRadius = 4,
+                // ---- Button ----
+                ButtonBackColor = "#D3D3D3",
+                ButtonForeColor = "#000000"
             };
         }
 
@@ -144,10 +159,12 @@ namespace Home_Cinema
                     ctrl.BackColor = theme.ButtonBackColorValue;
                     ctrl.ForeColor = theme.ButtonForeColorValue;
                 }
-                else if (ctrl is Panel)
+                else if (ctrl is Panel panel)
                 {
-                    ctrl.BackColor = theme.PanelBackColorValue;
-                    ctrl.ForeColor = theme.ForeColorValue;
+                    panel.BackColor = theme.PanelBackColorValue;
+                    panel.ForeColor = theme.ForeColorValue;
+                    panel.BorderStyle = theme.PanelBorderWidth > 0 ? BorderStyle.FixedSingle : BorderStyle.None;
+                    // Custom border color and radius would require custom painting, which can be added later
                 }
                 else
                 {
@@ -241,78 +258,47 @@ namespace Home_Cinema
             mainPanel.Controls.Add(flowPanel);
         }
 
-        private Panel CreateMediaCard(string folderPath)
+        // Change return type to Control for card compatibility
+        private Control CreateMediaCard(string folderPath)
         {
-            var panel = new Panel
-            {
-                Width = 150,
-                Height = 200,
-                Margin = new Padding(10),
-                BorderStyle = BorderStyle.FixedSingle
-            };
-            var picture = new PictureBox
-            {
-                Width = 130,
-                Height = 130,
-                Top = 10,
-                Left = 10,
-                SizeMode = PictureBoxSizeMode.Zoom
-            };
-            var label = new Label
-            {
-                Top = 150,
-                Left = 10,
-                Width = 130,
-                TextAlign = ContentAlignment.MiddleCenter
-            };
-            // Load customization if exists
+            var card = new MediaCardControl();
+            // Set image
             var folderKey = folderPath;
             if (appSettings.FolderCustomizations.TryGetValue(folderKey, out var custom))
             {
-                label.Text = string.IsNullOrWhiteSpace(custom.CustomTitle) ? Path.GetFileName(folderPath) : custom.CustomTitle;
                 if (!string.IsNullOrEmpty(custom.CustomImagePath) && File.Exists(custom.CustomImagePath))
                 {
-                    picture.Image = Image.FromFile(custom.CustomImagePath);
+                    card.coverImage.Image = Image.FromFile(custom.CustomImagePath);
                 }
                 else if (File.Exists(PlaceholderImagePath))
                 {
-                    picture.Image = Image.FromFile(PlaceholderImagePath);
+                    card.coverImage.Image = Image.FromFile(PlaceholderImagePath);
                 }
                 else
                 {
-                    picture.Image = null;
+                    card.coverImage.Image = null;
                 }
+                card.titleLabel.Text = string.IsNullOrWhiteSpace(custom.CustomTitle) ? Path.GetFileName(folderPath) : custom.CustomTitle;
             }
             else
             {
-                label.Text = Path.GetFileName(folderPath);
+                card.titleLabel.Text = Path.GetFileName(folderPath);
                 if (File.Exists(PlaceholderImagePath))
                 {
-                    picture.Image = Image.FromFile(PlaceholderImagePath);
+                    card.coverImage.Image = Image.FromFile(PlaceholderImagePath);
                 }
                 else
                 {
-                    picture.Image = null;
+                    card.coverImage.Image = null;
                 }
             }
-            // Add edit button
-            var btnEdit = new Button
-            {
-                Text = "Edit",
-                Width = 50,
-                Height = 25,
-                Top = 170,
-                Left = 50
-            };
-            btnEdit.Click += (s, e) => EditFolderCard(folderPath);
-            panel.Controls.Add(picture);
-            panel.Controls.Add(label);
-            panel.Controls.Add(btnEdit);
-            panel.Cursor = Cursors.Hand;
-            panel.Click += (s, e) => ShowMediaFilesView(folderPath);
-            picture.Click += (s, e) => ShowMediaFilesView(folderPath);
-            label.Click += (s, e) => ShowMediaFilesView(folderPath);
-            return panel;
+
+            // Click events
+            card.Cursor = Cursors.Hand;
+            card.Click += (s, e) => ShowMediaFilesView(folderPath);
+            card.coverImage.Click += (s, e) => ShowMediaFilesView(folderPath);
+            card.titleLabel.Click += (s, e) => ShowMediaFilesView(folderPath);
+            return card;
         }
 
         private void EditFolderCard(string folderPath)
