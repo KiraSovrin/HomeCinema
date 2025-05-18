@@ -1,6 +1,6 @@
 ﻿namespace Home_Cinema
 {
-    partial class Form1
+    partial class HomeCinemaForm
     {
         /// <summary>
         ///  Required designer variable.
@@ -10,6 +10,8 @@
         private System.Windows.Forms.Button btnSelectFolder;
         private System.Windows.Forms.FlowLayoutPanel flowPanelCards;
         private System.Windows.Forms.Panel mainPanel;
+        private System.Windows.Forms.Button btnMinimize;
+        private System.Windows.Forms.Button btnClose;
 
         /// <summary>
         ///  Clean up any resources being used.
@@ -32,47 +34,76 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            this.btnSelectFolder = new System.Windows.Forms.Button();
-            this.flowPanelCards = new System.Windows.Forms.FlowLayoutPanel();
-            this.mainPanel = new System.Windows.Forms.Panel();
-            this.SuspendLayout();
+            btnSelectFolder = new Button();
+            flowPanelCards = new FlowLayoutPanel();
+            mainPanel = new Panel();
+            btnMinimize = new Button();
+            btnClose = new Button();
+            SuspendLayout();
             // 
             // btnSelectFolder
             // 
-            this.btnSelectFolder.Location = new System.Drawing.Point(12, 12);
-            this.btnSelectFolder.Name = "btnSelectFolder";
-            this.btnSelectFolder.Size = new System.Drawing.Size(150, 30);
-            this.btnSelectFolder.TabIndex = 0;
-            this.btnSelectFolder.Text = "Select Main Folder";
-            this.btnSelectFolder.UseVisualStyleBackColor = true;
-            this.btnSelectFolder.Click += new System.EventHandler(this.btnSelectFolder_Click);
+            btnSelectFolder.Location = new Point(12, 12);
+            btnSelectFolder.Name = "btnSelectFolder";
+            btnSelectFolder.Size = new Size(150, 30);
+            btnSelectFolder.TabIndex = 0;
+            btnSelectFolder.Text = "Select Main Folder";
+            btnSelectFolder.UseVisualStyleBackColor = true;
+            btnSelectFolder.Click += btnSelectFolder_Click;
             // 
             // flowPanelCards
             // 
-            this.flowPanelCards.Location = new System.Drawing.Point(12, 50);
-            this.flowPanelCards.Name = "flowPanelCards";
-            this.flowPanelCards.Size = new System.Drawing.Size(776, 388);
-            this.flowPanelCards.TabIndex = 1;
-            this.flowPanelCards.AutoScroll = true;
+            flowPanelCards.AutoScroll = true;
+            flowPanelCards.Location = new Point(12, 50);
+            flowPanelCards.Name = "flowPanelCards";
+            flowPanelCards.Size = new Size(776, 388);
+            flowPanelCards.TabIndex = 1;
             // 
             // mainPanel
             // 
-            this.mainPanel.Location = new System.Drawing.Point(12, 50);
-            this.mainPanel.Name = "mainPanel";
-            this.mainPanel.Size = new System.Drawing.Size(776, 388);
-            this.mainPanel.TabIndex = 2;
-            this.mainPanel.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            mainPanel.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            mainPanel.Location = new Point(12, 50);
+            mainPanel.Name = "mainPanel";
+            mainPanel.Size = new Size(776, 388);
+            mainPanel.TabIndex = 2;
             // 
-            // Form1
+            // btnMinimize
             // 
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.btnSelectFolder);
-            this.Controls.Add(this.mainPanel);
-            this.Name = "Form1";
-            this.Text = "Home Cinema";
-            this.ResumeLayout(false);
+            btnMinimize.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnMinimize.Size = new Size(30, 30);
+            btnMinimize.Location = new Point(800 - 70, 0); // 70px from right
+            btnMinimize.Text = "_";
+            btnMinimize.Name = "btnMinimize";
+            btnMinimize.TabIndex = 3;
+            btnMinimize.FlatStyle = FlatStyle.Flat;
+            btnMinimize.FlatAppearance.BorderSize = 0;
+            btnMinimize.Click += new System.EventHandler(this.BtnMinimize_Click);
+            // 
+            // btnClose
+            // 
+            btnClose.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnClose.Size = new Size(30, 30);
+            btnClose.Location = new Point(800 - 35, 0); // 35px from right
+            btnClose.Text = "X";
+            btnClose.Name = "btnClose";
+            btnClose.TabIndex = 4;
+            btnClose.FlatStyle = FlatStyle.Flat;
+            btnClose.FlatAppearance.BorderSize = 0;
+            btnClose.Click += new System.EventHandler(this.BtnClose_Click);
+            // 
+            // HomeCinemaForm
+            // 
+            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(800, 450);
+            Controls.Add(btnSelectFolder);
+            Controls.Add(mainPanel);
+            Controls.Add(btnMinimize);
+            Controls.Add(btnClose);
+            Name = "HomeCinemaForm";
+            Text = "Home Cinema";
+            Load += HomeCinemaForm_Load;
+            ResumeLayout(false);
         }
 
         #endregion

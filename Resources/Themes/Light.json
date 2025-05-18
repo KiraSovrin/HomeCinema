@@ -1,0 +1,11 @@
+{
+  "Name": "Light",
+  "BackColor": "#FFFFFF",
+  "ForeColor": "#000000",
+  "ButtonBackColor": "#D3D3D3",
+  "ButtonForeColor": "#000000",
+  "PanelBackColor": "#F5F5F5",
+  "MainFontFamily": "Segoe UI",
+  "MainFontSize": 10,
+  "MainFontStyle": 0
+}
