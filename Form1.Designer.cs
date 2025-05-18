@@ -1,6 +1,6 @@
 ﻿namespace Home_Cinema
 {
-    partial class Form1
+    partial class HomeCinemaForm
     {
         /// <summary>
         ///  Required designer variable.
@@ -10,6 +10,8 @@
         private System.Windows.Forms.Button btnSelectFolder;
         private System.Windows.Forms.FlowLayoutPanel flowPanelCards;
         private System.Windows.Forms.Panel mainPanel;
+        private System.Windows.Forms.Button btnMinimize;
+        private System.Windows.Forms.Button btnClose;
 
         /// <summary>
         ///  Clean up any resources being used.
@@ -32,49 +34,100 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            this.btnSelectFolder = new System.Windows.Forms.Button();
-            this.flowPanelCards = new System.Windows.Forms.FlowLayoutPanel();
-            this.mainPanel = new System.Windows.Forms.Panel();
-            this.SuspendLayout();
+            btnSelectFolder = new Button();
+            flowPanelCards = new FlowLayoutPanel();
+            mainPanel = new Panel();
+            btnMinimize = new Button();
+            btnClose = new Button();
+            sideBar = new Panel();
+            btnSettings = new Button();
+            sideBar.SuspendLayout();
+            SuspendLayout();
             // 
             // btnSelectFolder
             // 
-            this.btnSelectFolder.Location = new System.Drawing.Point(12, 12);
-            this.btnSelectFolder.Name = "btnSelectFolder";
-            this.btnSelectFolder.Size = new System.Drawing.Size(150, 30);
-            this.btnSelectFolder.TabIndex = 0;
-            this.btnSelectFolder.Text = "Select Main Folder";
-            this.btnSelectFolder.UseVisualStyleBackColor = true;
-            this.btnSelectFolder.Click += new System.EventHandler(this.btnSelectFolder_Click);
+            btnSelectFolder.Cursor = Cursors.Hand;
+            btnSelectFolder.Location = new Point(12, 3);
+            btnSelectFolder.Name = "btnSelectFolder";
+            btnSelectFolder.Size = new Size(122, 30);
+            btnSelectFolder.TabIndex = 0;
+            btnSelectFolder.Text = "Select Main Folder";
+            btnSelectFolder.UseVisualStyleBackColor = true;
+            btnSelectFolder.Click += btnSelectFolder_Click;
             // 
             // flowPanelCards
             // 
-            this.flowPanelCards.Location = new System.Drawing.Point(12, 50);
-            this.flowPanelCards.Name = "flowPanelCards";
-            this.flowPanelCards.Size = new System.Drawing.Size(776, 388);
-            this.flowPanelCards.TabIndex = 1;
-            this.flowPanelCards.AutoScroll = true;
+            flowPanelCards.AutoScroll = true;
+            flowPanelCards.Location = new Point(12, 50);
+            flowPanelCards.Name = "flowPanelCards";
+            flowPanelCards.Size = new Size(800, 400);
+            flowPanelCards.TabIndex = 1;
             // 
             // mainPanel
             // 
-            this.mainPanel.Location = new System.Drawing.Point(12, 50);
-            this.mainPanel.Name = "mainPanel";
-            this.mainPanel.Size = new System.Drawing.Size(776, 388);
-            this.mainPanel.TabIndex = 2;
-            this.mainPanel.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            mainPanel.BackColor = Color.Transparent;
+            mainPanel.Location = new Point(156, 39);
+            mainPanel.Name = "mainPanel";
+            mainPanel.Padding = new Padding(5);
+            mainPanel.Size = new Size(728, 522);
+            mainPanel.TabIndex = 6;
             // 
-            // Form1
+            // btnMinimize
             // 
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.btnSelectFolder);
-            this.Controls.Add(this.mainPanel);
-            this.Name = "Form1";
-            this.Text = "Home Cinema";
-            this.ResumeLayout(false);
+            btnMinimize.Location = new Point(816, 8);
+            btnMinimize.Name = "btnMinimize";
+            btnMinimize.Size = new Size(25, 25);
+            btnMinimize.TabIndex = 7;
+            btnMinimize.Click += BtnMinimize_Click;
+            // 
+            // btnClose
+            // 
+            btnClose.Location = new Point(847, 8);
+            btnClose.Name = "btnClose";
+            btnClose.Size = new Size(25, 25);
+            btnClose.TabIndex = 0;
+            btnClose.Click += BtnClose_Click;
+            // 
+            // sideBar
+            // 
+            sideBar.BackColor = Color.Transparent;
+            sideBar.Controls.Add(btnSettings);
+            sideBar.Controls.Add(btnSelectFolder);
+            sideBar.Location = new Point(0, 39);
+            sideBar.Name = "sideBar";
+            sideBar.Padding = new Padding(2);
+            sideBar.Size = new Size(150, 522);
+            sideBar.TabIndex = 5;
+            // 
+            // btnSettings
+            // 
+            btnSettings.Location = new Point(12, 39);
+            btnSettings.Name = "btnSettings";
+            btnSettings.Size = new Size(122, 33);
+            btnSettings.TabIndex = 1;
+            btnSettings.Text = "Settings";
+            btnSettings.UseVisualStyleBackColor = true;
+            btnSettings.Click += btnSettings_Click;
+            // 
+            // HomeCinemaForm
+            // 
+            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(884, 561);
+            Controls.Add(btnClose);
+            Controls.Add(btnMinimize);
+            Controls.Add(sideBar);
+            Controls.Add(mainPanel);
+            Name = "HomeCinemaForm";
+            Text = "Home Cinema";
+            Load += HomeCinemaForm_Load;
+            sideBar.ResumeLayout(false);
+            ResumeLayout(false);
         }
 
         #endregion
+
+        private Panel sideBar;
+        private Button btnSettings;
     }
 }

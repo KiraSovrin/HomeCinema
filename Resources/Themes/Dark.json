@@ -1,0 +1,14 @@
+{
+  "Name": "Dark",
+  "BackColor": "#1E1E1E",
+  "ForeColor": "#FFFFFF",
+  "MainFontFamily": "Segoe UI",
+  "MainFontSize": 10,
+  "MainFontStyle": 0,
+  "PanelBackColor": "#2D2D2D",
+  "PanelBorderColor": "#444444",
+  "PanelBorderWidth": 1,
+  "PanelCornerRadius": 4,
+  "ButtonBackColor": "#3C3C3C",
+  "ButtonForeColor": "#FFFFFF"
+}
